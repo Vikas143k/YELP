@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
-        folder: 'your folder name',
+        folder: 'MakeYourTrip',
         allowed_formats: ['jpeg', 'jpg', 'png'],
     },
 });

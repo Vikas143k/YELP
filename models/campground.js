@@ -3,7 +3,12 @@ const Review= require("./review.js");
 const Schema= mongoose.Schema;
 const campgroundSchema= new Schema({
     title: String,
-    image:String,
+    images:[
+        {
+            url:String,
+            filename:String
+        }
+    ],
     price:Number,
     description:String,
     location:String,
