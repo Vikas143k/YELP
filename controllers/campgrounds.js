@@ -1,7 +1,6 @@
 const Campground = require('../models/campground');
 const catchAsync=require('../utils/catchAsync');
-const {cloudinary}=require('../cloudinary')
-
+const {cloudinary}=require('../cloudinary');
 
 module.exports.index=async(req,res)=>{
     const campground= await Campground.find({})
@@ -12,7 +11,14 @@ module.exports.newCampgroundForm=catchAsync( async (req,res)=>{
 })
 
 module.exports.createCampground=catchAsync(async (req,res, next)=>{
+    const maptilersdk = await import('@maptiler/sdk');
+//   const { GeocodingControl } = await import('@maptiler/geocoding-control/maptilersdk');
+  maptilersdk.config.apiKey=process.env.MAPTILLER_TOKEN;
+  const query = req.body.campground.location;
+  const response = await maptilersdk.geocoding.forward(query, { limit: 1 });
+//   console.log(response.features.coordinates);
     const campground= new Campground(req.body.campground);
+    campground.geometry=response.features[0].geometry;
     campground.images=req.files.map(f=>({url:f.path,filename:f.filename}))
     campground.owner=req.user._id;
     await campground.save();
@@ -67,4 +73,4 @@ module.exports.deleteCampground=catchAsync(async(req,res)=>{
     await Campground.findByIdAndDelete(id);
     req.flash("success","Successfully deleted the Campground");
     res.redirect("/campgrounds")
-})
+});
