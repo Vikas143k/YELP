@@ -1,7 +1,7 @@
 
 maptilersdk.config.apiKey = maptilerkey;
     const map = new maptilersdk.Map({
-        container: 'map',
+        container: 'cluster-map',
         zoom: 5,
         center: [80.32898728650545, 23.512141414149916],
         style: maptilersdk.MapStyle.STREETS.LIGHT
