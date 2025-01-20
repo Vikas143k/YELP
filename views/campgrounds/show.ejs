@@ -110,9 +110,8 @@
     </div>
     <script>
       const maptilerkey = '<%-process.env.MAPTILLER_TOKEN%>';
-      const coordinate = '<%- JSON.stringify(campground.geometry.coordinates) %>';
-      const campground = '<%- JSON.stringify(campground) %>';
-
+      const coordinate = <%- JSON.stringify(campground.geometry.coordinates) %>;
+      const campground = <%- JSON.stringify(campground) %>;
     </script>    
 <script src="/js/showMap.js"></script>
   

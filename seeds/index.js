@@ -15,7 +15,7 @@ const randomSample = array =>array[Math.floor(Math.random()*array.length)];
 
 const seedDB=async()=>{
     await campground.deleteMany({});
-    for(let i=0;i<50;i++){
+    for(let i=0;i<150;i++){
         const random162= Math.floor(Math.random()*162)
         const random30=Math.floor(Math.random()*30)
         const price=((Math.floor((Math.random()*20)+1))*1000)-1

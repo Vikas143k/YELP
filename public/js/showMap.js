@@ -7,20 +7,20 @@
 maptilersdk.config.apiKey = maptilerkey;
 
 // Parse the coordinates if necessary
-const parsedCoordinate = JSON.parse(coordinate);
-const parsedCampground=JSON.parse(campground);
+// const parsedCoordinate = JSON.parse(coordinate);
+// const parsedCampground=JSON.parse(campground);
 
 const map = new maptilersdk.Map({
   container: 'map',
   style: maptilersdk.MapStyle.STREETS,
 //   center: [78.20900554209948, 28.613895618708465], // Parsed coordinates
-  center: parsedCoordinate, // Parsed coordinates
+  center: coordinate, // Parsed coordinates
   zoom: 8
 });
 
  // create the popup
  var popup = new maptilersdk.Popup({ offset: 25 }).setHTML(
-  `<h4>${parsedCampground.title}</h4>`
+  `<h4>${campground.title}</h4>`
 );
 
 // create DOM element for the marker
@@ -29,6 +29,6 @@ el.id = 'marker';
 
 
 const marker = new maptilersdk.Marker()
-  .setLngLat(parsedCoordinate)
+  .setLngLat(coordinate)
   .setPopup(popup)
   .addTo(map);
