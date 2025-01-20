@@ -1,7 +1,34 @@
+// import * as maptilersdk from '@maptiler/sdk';
+
+
+
+
+// Use the global variables set in the EJS file
 maptilersdk.config.apiKey = maptilerkey;
+
+// Parse the coordinates if necessary
+const parsedCoordinate = JSON.parse(coordinate);
+const parsedCampground=JSON.parse(campground);
+
 const map = new maptilersdk.Map({
-  container: 'map', // container's id or the HTML element in which the SDK will render the map
+  container: 'map',
   style: maptilersdk.MapStyle.STREETS,
-  center: [16.62662018, 49.2125578], // starting position [lng, lat]
-  zoom: 4 // starting zoom
+//   center: [78.20900554209948, 28.613895618708465], // Parsed coordinates
+  center: parsedCoordinate, // Parsed coordinates
+  zoom: 8
 });
+
+ // create the popup
+ var popup = new maptilersdk.Popup({ offset: 25 }).setHTML(
+  `<h4>${parsedCampground.title}</h4>`
+);
+
+// create DOM element for the marker
+var el = document.createElement('div');
+el.id = 'marker';
+
+
+const marker = new maptilersdk.Marker()
+  .setLngLat(parsedCoordinate)
+  .setPopup(popup)
+  .addTo(map);
