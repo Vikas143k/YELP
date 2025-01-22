@@ -18,7 +18,7 @@ const ExpressError=require('./utils/ExpressError')
 const campgroundRoutes=require("./routes/campgrounds");
 const reviewRoutes=require("./routes/reviews");
 const userRoutes=require("./routes/user");
-
+const helmet=require("helmet");
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp')
@@ -37,7 +37,8 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended:true}))
 const sessionConfig={
-     secret:"thisisSecret",
+    name:"session",
+     secret:"session",
      resave:false,
      saveUninitialized:true,
      cookie:{
@@ -45,9 +46,50 @@ const sessionConfig={
         maxAge:1000*60*60*24*7
      }
 }
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/", 
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/", 
+];
+const connectSrcUrls = [
+    "https://api.maptiler.com/",
+];
+
+
 app.use(session(sessionConfig))
 app.use(flash());
+app.use(helmet.contentSecurityPolicy({
+    directives:{
+        defaultSrc:[],
+        connectSrc:["'self'",...connectSrcUrls],
+        scriptSrc:["'unsafe-inline'","'self'",...styleSrcUrls],
+        styleSrc:["'self'","'unsafe-inline'",...styleSrcUrls],
+        workerSrc:["'self'","blob:"],
+        objectSrc:[],
+        imgSrc:[
+            "'self'",
+            "blob:",
+            "data:",
+            "https://res.cloudinary.com/djec3zuzn/",
+            "https://images.unsplash.com/",
+            "https://api.maptiler.com/",
+
+        ]
+    }
+}))
 const mongoSanitize = require('express-mongo-sanitize');
+const { object } = require('joi');
 
 app.use(passport.initialize());
 app.use(passport.session());

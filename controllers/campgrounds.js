@@ -48,12 +48,10 @@ module.exports.showCampground=catchAsync(async (req,res)=>{
         req.flash('error',"Cannot find that Campground!");
         return res.redirect("/campgrounds");
     }
-    console.log(campground);
     res.render("campgrounds/show", {campground})
 })
 module.exports.updateCampground=catchAsync(async (req,res)=>{
     const {id}=req.params;
-    console.log(req.body);
         // const campground=await Campground.findById(id);
         const campground =await Campground.findByIdAndUpdate(id, { ...req.body.campground });
         const img=req.files.map(f=>({url:f.path,filename:f.filename}))
@@ -64,7 +62,6 @@ module.exports.updateCampground=catchAsync(async (req,res)=>{
                 await cloudinary.uploader.destroy(filename);
             }
         await campground.updateOne({$pull:{images:{filename:{$in:req.body.deleteImages}}}})
-            console.log(campground);
     }
         req.flash("success","Successfully Updated Campground");
         res.redirect(`/campgrounds/${campground._id}`)
