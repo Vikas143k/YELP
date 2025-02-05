@@ -62,7 +62,7 @@ app.use(
         },
     })
 );
-const dbURL = 'mongodb://127.0.0.1:27017/yelp';
+const dbURL = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp';
 
 // 'mongodb://127.0.0.1:27017/yelp'
 mongoose.connect(dbURL)
