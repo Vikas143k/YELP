@@ -1,6 +1,6 @@
 # 🚀 Make Your Trip
 
-![Make Your Trip](https://via.placeholder.com/1000x300?text=Make+Your+Trip+Banner)
+![Make Your Trip](https://github.com/Vikas143k/YELP/blob/main/public/images/Home.png)
 
 > A seamless and secure travel planning application with interactive maps and itinerary management.
 
