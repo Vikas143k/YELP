@@ -18,6 +18,9 @@ const ExpressError=require('./utils/ExpressError')
 const campgroundRoutes=require("./routes/campgrounds");
 const reviewRoutes=require("./routes/reviews");
 const userRoutes=require("./routes/user");
+// const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 
 const scriptSrcUrls = [
     "https://stackpath.bootstrapcdn.com/",
@@ -59,14 +62,42 @@ app.use(
         },
     })
 );
+const dbURL = 'mongodb://127.0.0.1:27017/yelp';
 
-mongoose.connect('mongodb://127.0.0.1:27017/yelp')
+// 'mongodb://127.0.0.1:27017/yelp'
+mongoose.connect(dbURL)
 .then(()=>{
     console.log("mongoose CONNECTION ESTABLISHED")
 })
 .catch(err=>{
     console.log("ERROR")
 })
+
+
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient('mongodb://127.0.0.1:27017/yelp', {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
+
+// async function run() {
+//   try {
+//     // Connect the client to the server	(optional starting in v4.7)
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("admin").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+
 
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
@@ -75,7 +106,18 @@ app.set('views', path.join(__dirname,'views'))
 app.use(express.static(path.join(__dirname,'public')));
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended:true}))
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret: 'thisshouldbeabettersecret!'
+    }
+});
+store.on("error",function(e){
+    console.log("SESSION STORE ERROR",e)
+})
 const sessionConfig={
+    store:store,
      secret:"thisisSecret",
      resave:false,
      saveUninitialized:true,
