@@ -63,6 +63,35 @@ Templating Engine: EJS, EJS-Mate
 
 Maps & Geolocation: MapTiler SDK
 
+Dependencies 📦
+
+The following dependencies are used in this project:
+{
+  "@maptiler/geocoding-control": "^2.1.2",
+  "@maptiler/sdk": "^2.5.1",
+  "cloudinary": "^1.41.3",
+  "connect-flash": "^0.1.1",
+  "connect-mongo": "^5.1.0",
+  "dotenv": "^16.4.5",
+  "ejs": "^3.1.10",
+  "ejs-mate": "^4.0.0",
+  "express": "^4.19.2",
+  "express-mongo-sanitize": "^2.2.0",
+  "express-session": "^1.18.0",
+  "helmet": "^8.0.0",
+  "joi": "^17.13.3",
+  "maplibre-gl": "^5.0.1",
+  "method-override": "^3.0.0",
+  "mongoose": "^8.7.1",
+  "multer": "^1.4.5-lts.1",
+  "multer-storage-cloudinary": "^4.0.0",
+  "nodemon": "^3.1.9",
+  "passport": "^0.7.0",
+  "passport-local": "^1.0.0",
+  "passport-local-mongoose": "^8.0.0",
+  "sanitize-html": "^2.14.0"
+}
+
 Contributing 🤝
 
 Contributions are welcome! Feel free to fork the repo and submit a PR.
